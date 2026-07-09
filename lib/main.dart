@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ..setNavigationDelegate(NavigationDelegate(
         onPageFinished: (_) => setState(() => _isLoading = false),
       ))
-      ..loadRequest(Uri.parse('https://mhbscmsc.vercel.app'));
+      ..loadRequest(Uri.parse('https://mhbscmsc.vercel.app/'));
   }
 
   @override
