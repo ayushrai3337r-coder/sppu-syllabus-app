@@ -25,7 +25,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late final WebViewController _controller;
   bool _isLoading = true;
-  bool _hasError = false;
 
   @override
   void initState() {
@@ -34,20 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(Colors.white)
       ..setNavigationDelegate(NavigationDelegate(
-        onPageStarted: (_) => setState(() {
-          _isLoading = true;
-          _hasError = false;
-        }),
         onPageFinished: (_) => setState(() => _isLoading = false),
-        onWebResourceError: (error) => setState(() {
-          _isLoading = false;
-          _hasError = true;
-        }),
       ))
-      ..loadRequest(
-        Uri.parse('https://mhbscmsc.vercel.app'),
-        headers: {'Cache-Control': 'no-cache'},
-      );
+      ..loadRequest(Uri.parse('https://mhbscmsc.vercel.app'));
   }
 
   @override
@@ -60,10 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh, color: Colors.white),
-            onPressed: () {
-              setState(() => _hasError = false);
-              _controller.reload();
-            },
+            onPressed: () => _controller.reload(),
           )
         ],
       ),
@@ -71,27 +56,6 @@ class _HomeScreenState extends State<HomeScreen> {
         WebViewWidget(controller: _controller),
         if (_isLoading)
           const Center(child: CircularProgressIndicator(color: Color(0xFFFF6600))),
-        if (_hasError)
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.wifi_off, size: 64, color: Colors.grey),
-                const SizedBox(height: 16),
-                const Text('No Internet Connection',
-                    style: TextStyle(fontSize: 18, color: Colors.grey)),
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFFFF6600)),
-                  onPressed: () {
-                    setState(() => _hasError = false);
-                    _controller.reload();
-                  },
-                  child: const Text('Retry', style: TextStyle(color: Colors.white)),
-                ),
-              ],
-            ),
-          ),
       ]),
     );
   }
