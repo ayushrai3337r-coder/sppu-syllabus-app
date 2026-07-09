@@ -13,9 +13,12 @@ jobs:
         with:
           flutter-version: '3.24.0'
           channel: 'stable'
-      - run: flutter pub get
-      - run: flutter build apk --release
+      - name: Flutter pub get
+        run: flutter pub get
+      - name: Build APK
+        run: flutter build apk --release
+        working-directory: ${{ github.workspace }}
       - uses: actions/upload-artifact@v4
         with:
           name: release-apk
-          path: build/app/outputs/apk/release/app-release.apk
+          path: ${{ github.workspace }}/build/app/outputs/apk/release/app-release.apk
