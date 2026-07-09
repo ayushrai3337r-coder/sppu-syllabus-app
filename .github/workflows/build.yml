@@ -16,9 +16,6 @@ jobs:
       - name: Create Flutter project
         run: |
           flutter create temp_app --platforms android
-          cp -r temp_app/android ./android_complete
-          rm -rf android
-          mv android_complete android
           cp lib/main.dart temp_app/lib/main.dart
           cp pubspec.yaml temp_app/pubspec.yaml
       - name: Build APK
