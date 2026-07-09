@@ -35,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ..setNavigationDelegate(NavigationDelegate(
         onPageFinished: (_) => setState(() => _isLoading = false),
       ))
+      ..setUserAgent("Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36 Chrome/91.0 Mobile Safari/537.36")
       ..loadRequest(Uri.parse('https://mhbscmsc.vercel.app/'));
   }
 
